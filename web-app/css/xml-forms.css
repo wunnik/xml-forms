@@ -1,0 +1,73 @@
+/* Fix datatables pagination and length area */
+.DataTables_sort_wrapper .ui-icon { float:right;}
+.dataTables_filter { float: right;}
+.dataTables_length { width:200px;float:left;}
+#file-list {float:left;}
+#file-list_info {float:left;}
+#file-list_paginate {float:left;}
+
+/* set column widths for table */
+th.cmis-list-icon {width:18px;}
+th.cmis-list-actions {width:235px;}
+
+/* Show pointer cursor in first two rows of table */
+.clickable-cell {cursor:pointer;}
+.clickable-row {cursor:pointer;}
+
+.mime-16 {cursor:pointer;display:block;min-height:16px; padding:2px 0 2px 20px;background-repeat:no-repeat;display:block;}
+
+
+.Folder-16 { background-image: url("theme/icons/places/16/folder.png" ) ;}
+li.Folder-16 a ins { background-image: url("theme/icons/places/16/folder.png" ) !important; background-position: 0px 0px !important; }
+
+
+
+
+.help-icon { background-image: url(../images/help-16x16.png);width:16px;height:16px;}
+.action-insert { background-image: url(../images/add-16x16.png);width:16px;height:16px;}
+.action-delete { background-image: url(../images/remove-16x16.png);width:16px;height:16px;}
+label.error {display:inline;}
+
+.form-actions .btn + .btn {
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+
+.form-header:after {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Aanvraag gegevens";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+.form-header {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    position: relative;
+}
+ul.comment {margin-left:0px;}
+ul.comment li {list-style: none outside none;margin-top:5px;}
+ul.comment li .comment-item {border-bottom: 1px dashed #D1D1D1;}
+.comment-author .fn { line-height: 24px;font-size:16px;padding-left:5px;}
+.comment-author img { width:32px; height:32px;}
+.comment-text {padding-top:5px;padding-bottom:5px;}
+.comment-date {font-size:11px;color:#666;}
+.comment-date .date {font-weight:bold;}
+
+label.error { margin-left:5px;}
+.modal-header:hover { cursor:move;}
+
+#form { margin-bottom:0px;}
+
+span.modal-header { font-size:22px;font-weight:bold; }
+span.modal-explanation {color:#888; font-size:12px; font-style:italic;}

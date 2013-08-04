@@ -1,0 +1,17 @@
+modules = {
+	'xml-forms' {
+		dependsOn 'dialog,dialog,dialog-dataTables,dialog-altselect,dialog-ckeditor,dialog-codemirror,bootstrap-css,bootstrap-tooltip,bootstrap-popover,bootstrap-modal,dialog-last'		
+		resource url:'js/xml-forms.js'
+		resource url:'css/xml-forms.css'
+		resource url:'js/jquery/jquery.validate.pack.js'
+	}
+	
+	'xml-forms-datepicker' {
+		resource url:'js/jquery/jquery-ui-timepicker-addon.js'		
+		resource url:'js/xml-forms.datepicker.js'
+	}
+    
+    'xml-forms-tabs' {
+		resource url:'js/xml-forms.tabs.js'
+	}
+}

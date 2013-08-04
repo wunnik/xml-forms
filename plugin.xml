@@ -1,0 +1,26 @@
+<plugin name='xml-forms' version='0.1' grailsVersion='2.1 &gt; *'>
+  <author>Your name</author>
+  <title>Xml Forms Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/xml-forms</documentation>
+  <type>XmlFormsGrailsPlugin</type>
+  <resources>
+    <resource>FormsResources</resource>
+    <resource>org.open_t.forms.FormService</resource>
+    <resource>org.open_t.forms.FormTagLib</resource>
+  </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://grails.org/plugins' />
+    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies />
+  <plugins>
+    <runtime>
+      <plugin group='org.grails.plugins' name='jquery-dialog' version='2.0.2' />
+    </runtime>
+  </plugins>
+  <runtimePluginRequirements />
+  <behavior />
+</plugin>
