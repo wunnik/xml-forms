@@ -32,7 +32,7 @@ xmlforms.datepicker.open =function open (e,params) {
     $(this).find(".datepicker").each (function (i) {
         var id=this.id;
         var updateElementId = $(this).attr('id').replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
-        $(this).datepicker({    dateFormat: "yy-mm-dd" , 
+        $(this).datepicker({    //dateFormat: "yy-mm-dd" , 
                                 changeMonth: true, 
                                 changeYear:true,
                                 altField:"#"+updateElementId,
