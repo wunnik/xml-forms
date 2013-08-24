@@ -121,7 +121,7 @@ xmlforms.reload = function reload() {
  * @param urlParams
  * @returns {Boolean}
  */
-xmlforms.formDialog = function dialog(id,controllerName, options ,urlParams) {
+xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 	var urlId=id+window.dialog.obj2ParamStr(urlParams);
     //    var urlId=id
 	//var urlId="test";
