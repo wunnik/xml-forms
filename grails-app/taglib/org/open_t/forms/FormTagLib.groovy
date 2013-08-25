@@ -298,7 +298,7 @@ class FormTagLib {
 				formattedCommentDate=commentDate.dateTimeString
 			}
 		    html+="""<li><div class="comment-item">
-								<div class="comment-author"><img src="${resource(dir:'images',file:'avatar.jpg')}"/><span class="fn">${comment.user.text()}</span></div>
+								<div class="comment-author"><img src="${createLink(action:'avatar',id:comment.user.text())}"/><span class="fn">${comment.user.text()}</span></div>
 								<div class="comment-text">${comment.text.text()}</div>
 								<div class="comment-date">${message(code:'form.comment.date.label')} <span class="date">${formattedCommentDate}</span></div>
 							</div></li>"""
