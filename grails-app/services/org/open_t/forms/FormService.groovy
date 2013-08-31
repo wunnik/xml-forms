@@ -276,7 +276,7 @@ class FormService implements  ApplicationContextAware {
     def avatar(params) {
         def size=params.s?:32
         String email=params.id.toLowerCase().trim()
-        if (!email.contains("@")) {
+        if (email && !email.contains("@")) {
             email=email+'@'+grailsApplication.config.gravatar.domain
         }
         return "https://secure.gravatar.com/avatar/"+md5(email)+"?s=${size}&d=monsterid"        
