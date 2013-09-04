@@ -132,7 +132,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 	var refreshTableKey = (options !== null && options["refresh"] !== null) ? options["refresh"] : "NO_REFRESH";
 	
 	// if true, form submit will be used instead of AJAX
-	var submitForm = (options !== null && options["submitform"] != null) ? options["submitform"] : false;
+	var submitForm = (options !== null && options["submitform"] !== null) ? options["submitform"] : false;
 	
 	// if true, form will not be submitted at all
 	var noSubmit = (options !== null && options["nosubmit"] !== null) ? options["nosubmit"] : false;
@@ -168,7 +168,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         $("#page").append(xmlforms.dialogHTML);
         
         xmlforms.theDialog=$("#page div.modal");
-        $(xmlforms.theDialog).modal({show:false});
+        $(xmlforms.theDialog).modal({show:false,backdrop:'static'});
 
 		 
 		xmlforms.theDialog.draggable({
