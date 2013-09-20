@@ -141,23 +141,41 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 	
 	theUrl=window.dialog.baseUrl+'/'+controllerName+'/'+dialogName+'/'+urlId;	 	
 	 
-	 xmlforms.dialogHTML = $.ajax({
+	xmlforms.dialogHTML = $.ajax({
 		url: theUrl,
 		async: false,
 		cache: false
 	}).error(function(event, jqXHR, ajaxSettings, thrownError) { 
-		window.location.reload();
+        if (event.status>=400 && event.status<500) {
+            window.location.reload();
+        }
 	}).responseText;
     
-	 
+     
 	var formelements=$(xmlforms.dialogHTML).find('form.xml-form');
+    
+    var innerFormText=$(xmlforms.dialogHTML).find('div.body').html();
+    if (innerFormText) {
+        xmlforms.dialogHTML=innerFormText;
+    }
         
 	if (formelements.length===0) {
 		window.location.reload();
 	} else {
-                
-		var theWidth=$(xmlforms.dialogHTML).css("width") ? $(xmlforms.dialogHTML).css("width").replace("px","") : "800";
-        var theHeight=$(xmlforms.dialogHTML).css("height") ? $(xmlforms.dialogHTML).css("height").replace("px","") : "600";
+
+        var theWidth="800";
+        try {
+            theWidth=$(xmlforms.dialogHTML).css("width")!==null ? $(xmlforms.dialogHTML).css("width").replace("px","") : "800";
+        } catch(err) {
+        }
+        
+        var theHeight= "600";
+        try {
+            theHeight=$(xmlforms.dialogHTML).css("height") ? $(xmlforms.dialogHTML).css("height").replace("px","") : "600";
+        } catch (err) {
+            
+        }
+        
         
         // If there was a previous modal, remove it from the DOM.
         if (xmlforms.theDialog) {
@@ -166,6 +184,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         xmlforms.dialogOpen=false;
         
         $("#page").append(xmlforms.dialogHTML);
+        
         
         xmlforms.theDialog=$("#page div.modal");
         $(xmlforms.theDialog).modal({show:false,backdrop:'static'});
@@ -271,7 +290,10 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 			//alert('test');
 			event.preventDefault();
 		});
-		
+
+		$(xmlforms.theDialog).on('hide',function(event) {
+ 			$(this).trigger("dialog-close",{event:event,ui:null,'this':this})       	
+		});		
 		xmlforms.theDialog.modal('show');
 	}
 	
