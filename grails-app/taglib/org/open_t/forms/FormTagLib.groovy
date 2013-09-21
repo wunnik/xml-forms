@@ -33,7 +33,15 @@ class FormTagLib {
 		
 		if (attrs.enctype) { enctype="""enctype="${attrs.enctype}" """}
 		if (attrs.style) { style="""style="${attrs.style}" """}
-		def formHead="""<div title="${attrs.title}" ${style} id="${attrs.name}" class="xml-form modal hide xfade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+        def lock=""
+        def cssClass=""
+        if (attrs.lock) { 
+            lock="""lock="${attrs.lock}" """
+            cssClass+=" lock"
+        }
+       
+		def formHead="""<div title="${attrs.title}" ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<div id="myModalLabel"><span class="modal-header">${attrs.title}</span>&nbsp;<span class="modal-explanation">${attrs.explanation}</span></div></div>
