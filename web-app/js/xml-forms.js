@@ -21,7 +21,13 @@
 
 
 if (!window.xmlforms) {
-	window.xmlforms={};	
+	window.xmlforms={
+        currentForm : {
+            submitted:false,
+            form:null,
+            dialog:null
+        }
+    };	
 }
 
 xmlforms.regexpValidator = function (value,element,expression) {
@@ -178,35 +184,36 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         
         
         // If there was a previous modal, remove it from the DOM.
-        if (xmlforms.theDialog) {
-            $(xmlforms.theDialog).remove();
+        if (xmlforms.currentForm.dialog) {
+            $(xmlforms.currentForm.dialog).remove();
         }
         xmlforms.dialogOpen=false;
         
         $("#page").append(xmlforms.dialogHTML);
         
         
-        xmlforms.theDialog=$("#page div.modal");
-        $(xmlforms.theDialog).modal({show:false,backdrop:'static'});
+        xmlforms.currentForm.dialog=$("#page div.modal");
+        $(xmlforms.currentForm.dialog).modal({show:false,backdrop:'static'});
 
 		 
-		xmlforms.theDialog.draggable({
+		xmlforms.currentForm.dialog.draggable({
 			handle: ".modal-header"
 		});
 		//theDialog.resizable();
         
-		$(xmlforms.theDialog[0]).css("margin-left","-"+theWidth/2+"px");
-        //$(xmlforms.theDialog[0]).css("top","50px");
+		$(xmlforms.currentForm.dialog[0]).css("margin-left","-"+theWidth/2+"px");
+        //$(xmlforms.currentForm.dialog[0]).css("top","50px");
 		
 		var submitCallback=function(frm) {
-			var $form = $(frm);		
-			var $target = $form.attr('data-target');
+            xmlforms.currentForm.submitted=true;
+			xmlforms.currentForm.form = $(frm);		
+			var $target = xmlforms.currentForm.form.attr('data-target');
 	
-			var formdata=$form.serialize();
+			var formdata=xmlforms.currentForm.form.serialize();
 			 
 			$.ajax({
-				type: $form.attr('method'),
-				url: $form.attr('action'),
+				type: xmlforms.currentForm.form.attr('method'),
+				url: xmlforms.currentForm.form.attr('action'),
 				data: formdata,
 				dataType: "json",		  
 				success: function(data, status) {
@@ -216,7 +223,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message});
 				 					 		
 				 	if(jsonResponse.success){
-				 		xmlforms.theDialog.modal("hide");				 		
+				 		xmlforms.currentForm.dialog.modal("hide");				 		
 				 		if (jsonResponse.nextDialog) {
 				 			xmlforms.formDialog(jsonResponse.nextDialog.id,jsonResponse.nextDialog.controllerName,jsonResponse.nextDialog.options,jsonResponse.nextDialog.urlParams);
 				 		}
@@ -225,17 +232,17 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 				 			var errorField=jsonResponse.errorFields[key];
 				 			$("#"+errorField).parent().addClass("errors");				 			
 				 		}
-				 		xmlforms.theDialog.find("div.errors").html(jsonResponse.message);
-				 		xmlforms.theDialog.find("div.errors").show();
+				 		xmlforms.currentForm.dialog.find("div.errors").html(jsonResponse.message);
+				 		xmlforms.currentForm.dialog.find("div.errors").show();
 					 	
 			 		}				
-				 	xmlforms.theDialog.modal("hide");
+				 	xmlforms.currentForm.dialog.modal("hide");
 				}
 			});
 			//event.preventDefault();
 		};
 	
-		xmlforms.theDialog.on('show', function (event) {
+		xmlforms.currentForm.dialog.on('show', function (event) {
             if (!xmlforms.dialogOpen) {
                 xmlforms.dialogOpen=true;
                 
@@ -264,8 +271,8 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                         if (errors) {
                             var message = errors === 1 ? '1 field has errors. It has been highlighted': errors + ' fields have errors. They have been highlighted';                            
                             var errorHTML='<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> '+message+'</div>';
-                            //$(xmlforms.theDialog).find("div.modal-header").after(errorHTML);
-                            $(xmlforms.theDialog).find("div.modal-body").prepend(errorHTML);
+                            //$(xmlforms.currentForm.dialog).find("div.modal-header").after(errorHTML);
+                            $(xmlforms.currentForm.dialog).find("div.modal-body").prepend(errorHTML);
                         }
                      }
                 });
@@ -278,23 +285,23 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
             }
 		});
 		
-		var theForm=$(xmlforms.theDialog).find("form")[0];
+		var theForm=$(xmlforms.currentForm.dialog).find("form")[0];
 		 
 		$(theForm).on('submit', function(event) {
 			//submitCallback(theForm);
-			var $form = $(this);		
-			var $target = $form.attr('data-target');
+			xmlforms.currentForm.form = $(this);		
+			var $target = xmlforms.currentForm.form.attr('data-target');
 	
-			var formdata=$form.serialize();
+			var formdata=xmlforms.currentForm.form.serialize();
 			
 			//alert('test');
 			event.preventDefault();
 		});
 
-		$(xmlforms.theDialog).on('hide',function(event) {
- 			$(this).trigger("dialog-close",{event:event,ui:null,'this':this})       	
+		$(xmlforms.currentForm.dialog).on('hide',function(event) {
+ 			$(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
 		});		
-		xmlforms.theDialog.modal('show');
+		xmlforms.currentForm.dialog.modal('show');
 	}
 	
 };
