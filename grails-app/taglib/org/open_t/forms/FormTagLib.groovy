@@ -53,6 +53,8 @@ class FormTagLib {
         formHead+="""<fieldset>"""
 		formHead+="""<input type="hidden" name="form" value="${attrs.name}" />"""
 		formHead+="""<input type="hidden" name="process" value="${attrs.process}" />"""
+        formHead+="""<input id="${attrs.name}-outcome" type="hidden" name="outcome" value="" />"""
+        
 		
 		
 			out << formHead
@@ -71,13 +73,32 @@ class FormTagLib {
 			case "show" :
 				out <<""
 			break
+            
+            /*
+             * Format for outcomes:
+             * outcome
+             * outcome:messageId
+             * 
+             */
 			
 			case "task" :			
 				if(attrs.outcomes) {
-					attrs.outcomes.split(",").each { outcome ->
-						out << """<input type="submit" id="submit" value="${outcome}" name="submit" class="button btn" role="button"  />"""
+					attrs.outcomes.split(",").each { outcomeString ->
+                        def outcome
+                        def outcomeLabelId
+                        def colonPosition=outcomeString.indexOf(":")
+                        if (colonPosition>-1) {                            
+                            outcome=outcomeString.substring(0,colonPosition)
+                            outcomeLabelId=outcomeString.substring(colonPosition+1)
+                        } else {
+                            outcome=outcomeString
+                            outcomeLabelId=outcomeString
+                        }
+                        def outcomeLabel=message(code:"outcome.${outcomeLabelId}.label",default:outcomeLabelId)
+                        def outcomeTitle=message(code:"outcome.${outcomeLabelId}.title",default:outcomeLabel)
+						out << """<input type="submit" class="help-tooltip outcome-submit" outcome-id="${attrs.name}-outcome" outcome="${outcome}" value="${outcomeLabel}" title="${outcomeTitle}" name="submit" class="button btn" role="button"  />"""
 					}
-			    }				
+			    }
 			break			
 		}
 	    out << """</div></fieldset></form></div>"""

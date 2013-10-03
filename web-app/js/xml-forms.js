@@ -221,7 +221,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 					var jsonResponse=data.result;
 					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
 				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message});
-				 					 		
+                    
 				 	if(jsonResponse.success){
 				 		xmlforms.currentForm.dialog.modal("hide");				 		
 				 		if (jsonResponse.nextDialog) {
@@ -237,7 +237,22 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 					 	
 			 		}				
 				 	xmlforms.currentForm.dialog.modal("hide");
-				}
+				},
+                error: function(data, status) {
+                    var responseText=eval('('+data.responseText+')');
+                    var jsonResponse=responseText.result
+					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
+				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message});
+				 		/*for (key in jsonResponse.errorFields) {
+				 			var errorField=jsonResponse.errorFields[key];
+				 			$("#"+errorField).parent().addClass("errors");				 			
+				 		}
+                    */
+				 		xmlforms.currentForm.dialog.find("div.errors").html(jsonResponse.message);
+				 		xmlforms.currentForm.dialog.find("div.errors").show();
+					
+                }
+                
 			});
 			//event.preventDefault();
 		};
@@ -260,6 +275,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 
 
                 $(this).find(".help").tooltip({});
+                $(this).find(".help-tooltip").tooltip({});
 
                 // TODO use the validate submission callback, see http://jqueryvalidation.org/validate
                 $(this).find('#form').validate({
@@ -375,9 +391,14 @@ jQuery(function(){
 		 });
 		return false;
   });
-    
-    
-    
+  
+  // Set the outcome of a submit button to the outcome hidden field.
+  $(document).on ("click" , '.outcome-submit',function(event) {    	
+    var submitButton=$(event.currentTarget);
+    var outcome=submitButton.attr("outcome");
+    var outcomeFieldId=submitButton.attr("outcome-id");
+    $("#"+outcomeFieldId).val(outcome);
+  });
 });
 
 
