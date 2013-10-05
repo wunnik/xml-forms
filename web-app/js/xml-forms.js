@@ -111,9 +111,9 @@ xmlforms.evaluateDependencies = function(element) {
 
 //This is performed on a full page reload
 xmlforms.reload = function reload() {
-    $("span.help").tooltip({});
-    $("a.help").tooltip({});
-    $("li.menu-item a").tooltip({});
+    $("span.help").tooltip({container:'body',placement:'right'});
+    $("a.help").tooltip({container:'body'});
+    $("li.menu-item a").tooltip({container:'body'});
 	$(".dependency-source").each(function() {
   		xmlforms.evaluateDependencies(this);
 	});
@@ -274,8 +274,8 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                 $(this).find(".altselect").altselect();       	
 
 
-                $(this).find(".help").tooltip({});
-                $(this).find(".help-tooltip").tooltip({});
+                $(this).find(".help").tooltip({container:'body',placement:'right'});
+                $(this).find(".help-tooltip").tooltip({container:'body'});
 
                 // TODO use the validate submission callback, see http://jqueryvalidation.org/validate
                 $(this).find('#form').validate({
@@ -404,6 +404,5 @@ jQuery(function(){
 
 jQuery(function() {
 	$("body").on("dialog-refresh",xmlforms.reload);
-		
 });
 
