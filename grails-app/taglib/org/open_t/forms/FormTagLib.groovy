@@ -41,7 +41,7 @@ class FormTagLib {
             cssClass+=" lock"
         }
        
-		def formHead="""<div title="${attrs.title}" ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		def formHead="""<div ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<div id="myModalLabel"><span class="modal-header">${attrs.title}</span>&nbsp;<span class="modal-explanation">${attrs.explanation}</span></div></div>
@@ -96,7 +96,7 @@ class FormTagLib {
                         }
                         def outcomeLabel=message(code:"outcome.${outcomeLabelId}.label",default:outcomeLabelId)
                         def outcomeTitle=message(code:"outcome.${outcomeLabelId}.title",default:outcomeLabel)
-						out << """<input type="submit" class="help-tooltip outcome-submit" outcome-id="${attrs.name}-outcome" outcome="${outcome}" value="${outcomeLabel}" title="${outcomeTitle}" name="submit" class="button btn" role="button"  />"""
+						out << """<input type="submit" class="btn help-tooltip outcome-submit" outcome-id="${attrs.name}-outcome" outcome="${outcome}" value="${outcomeLabel}" title="${outcomeTitle}" name="submit" class="button btn" role="button"  />"""
 					}
 			    }
 			break			
