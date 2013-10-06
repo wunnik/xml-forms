@@ -220,7 +220,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 					//alert (data);
 					var jsonResponse=data.result;
 					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
-				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message});
+				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'success'});
                     
 				 	if(jsonResponse.success){
 				 		xmlforms.currentForm.dialog.modal("hide");				 		
@@ -232,7 +232,8 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 				 			var errorField=jsonResponse.errorFields[key];
 				 			$("#"+errorField).parent().addClass("errors");				 			
 				 		}
-				 		xmlforms.currentForm.dialog.find("div.errors").html(jsonResponse.message);
+                        var msg='<div id="alertmessage" class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><div>'+jsonResponse.message+'</div></div>';
+				 		xmlforms.currentForm.dialog.find("div.errors").html(msg);
 				 		xmlforms.currentForm.dialog.find("div.errors").show();
 					 	
 			 		}				
@@ -240,15 +241,16 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 				},
                 error: function(data, status) {
                     var responseText=eval('('+data.responseText+')');
-                    var jsonResponse=responseText.result
+                    var jsonResponse=responseText.result;
 					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
-				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message});
+				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'error'});
 				 		/*for (key in jsonResponse.errorFields) {
 				 			var errorField=jsonResponse.errorFields[key];
 				 			$("#"+errorField).parent().addClass("errors");				 			
 				 		}
                     */
-				 		xmlforms.currentForm.dialog.find("div.errors").html(jsonResponse.message);
+                        var msg='<div id="alertmessage" class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><div>'+jsonResponse.message+'</div></div>';
+				 		xmlforms.currentForm.dialog.find("div.errors").html(msg);
 				 		xmlforms.currentForm.dialog.find("div.errors").show();
 					
                 }
