@@ -71,3 +71,7 @@ label.error { margin-left:5px;}
 
 span.modal-header { font-size:22px;font-weight:bold; }
 span.modal-explanation {color:#888; font-size:12px; font-style:italic;}
+
+.tooltip {
+    z-index: 2000 !important;
+}
