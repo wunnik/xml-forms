@@ -49,7 +49,7 @@ class FormTagLib {
 		// explanation
 		formHead+="""<form class="form-horizontal xml-form" action="${attrs.action}" id="form" name="form" method="post" ${enctype} >"""
 		formHead+="""<div class="modal-body">"""
-				
+		formHead+="""<div class="errors" style="display:none;"></div>"""
         formHead+="""<fieldset>"""
 		formHead+="""<input type="hidden" name="form" value="${attrs.name}" />"""
 		formHead+="""<input type="hidden" name="process" value="${attrs.process}" />"""
@@ -63,11 +63,11 @@ class FormTagLib {
 			
 		switch (attrs.type) {
 			case "request":							
-				out << """<input type="submit" id="submit" value="${message(code:'submit')}" name="submit" class="btn btn-primary" role="button"  ></input>"""				
+				out << """<input type="submit" id="submit" value="${message(code:'submit')}" name="submit" class="btn btn-primary" role="button"  outcome="none" outcome-id="${attrs.name}-outcome"></input>"""				
 			break
 			
 			case "edit":							
-					out << """<input type="submit" id="submit" value="${message(code:'save',default:'Save')}" name="submit" class="btn" role="button"  ></input>"""				
+					out << """<input type="submit" id="submit" value="${message(code:'save',default:'Save')}" name="submit" class="btn" role="button"  outcome="none" outcome-id="${attrs.name}-outcome"></input>"""				
 			break
 			
 			case "show" :
