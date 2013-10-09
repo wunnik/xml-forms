@@ -42,9 +42,10 @@ class FormTagLib {
         }
        
 		def formHead="""<div ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-header">
+                            <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-								<div id="myModalLabel"><span class="modal-header">${attrs.title}</span>&nbsp;<span class="modal-explanation">${attrs.explanation}</span></div></div>
+								<div id="myModalLabel"><span class="modal-header">${attrs.title}</span>&nbsp;<span class="modal-explanation">${attrs.explanation}</span></div>
+                            </div>
 						"""
 		// explanation
 		formHead+="""<form class="form-horizontal xml-form" action="${attrs.action}" id="form" name="form" method="post" ${enctype} >"""
@@ -59,8 +60,10 @@ class FormTagLib {
 		
 			out << formHead
 			out << body()
-			out << """</div><div class="aaform-actions modal-footer">"""
-			
+            out << """</fieldset></div>"""
+			out << """<div class="aaform-actions modal-footer">"""
+            
+       
 		switch (attrs.type) {
 			case "request":							
 				out << """<input type="submit" id="submit" value="${message(code:'submit')}" name="submit" class="btn btn-primary" role="button"  outcome="none" outcome-id="${attrs.name}-outcome"></input>"""				
@@ -101,7 +104,7 @@ class FormTagLib {
 			    }
 			break			
 		}
-	    out << """</div></fieldset></form></div>"""
+	    out << """</div></form></div>"""
 	}
 	
 	def attributeString(attributeName,attributeValue) {
