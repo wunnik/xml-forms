@@ -112,8 +112,8 @@ xmlforms.evaluateDependencies = function(element) {
 //This is performed on a full page reload
 xmlforms.reload = function reload() {
     $("span.help").tooltip({container:'body',placement:'right'});
-    $("a.help").tooltip({container:'body'});
-    $("li.menu-item a").tooltip({container:'body'});
+    $("a.help").tooltip({container:'body',placement:'right'});
+    $("li.menu-item a").tooltip({container:'body',placement:'right'});
 	$(".dependency-source").each(function() {
   		xmlforms.evaluateDependencies(this);
 	});
