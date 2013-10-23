@@ -75,3 +75,5 @@ span.modal-explanation {color:#888; font-size:12px; font-style:italic;}
 .tooltip {
     z-index: 2000 !important;
 }
+
+span.uneditable-textarea { min-width: 210px; max-width: 530px; white-space: normal; }
