@@ -289,7 +289,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                         if (errors) {
                             var message = errors === 1 ? '1 field has errors. It has been highlighted': errors + ' fields have errors. They have been highlighted';                            
                             var errorHTML='<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> '+message+'</div>';
-                            //$(xmlforms.currentForm.dialog).find("div.modal-header").after(errorHTML);
+                            $(xmlforms.currentForm.dialog).find("div.modal-body div.alert.alert-error").remove();
                             $(xmlforms.currentForm.dialog).find("div.modal-body").prepend(errorHTML);
                         }
                      }
