@@ -80,4 +80,6 @@ a.tab sup {font-size:12px;}
 li.alertTab{background-color: #f2dede; border: 1px solid #EED3D7; border-bottom-color: #DDD; -webkit-border-radius: 4px 4px 0px 0px; border-radius: 4px 4px 0px 0px;}
 li.active.alertTab{background-color: #fff; border: 0px;}
 li.active.alertTab a {color: #b94a48;}
+.xml-form.modal .form-horizontal .control-label {width: 230px;}
+.xml-form.modal .form-horizontal .controls {margin-left: 250px;}
 span.uneditable-textarea { min-width: 210px; max-width: 530px; white-space: normal; }
