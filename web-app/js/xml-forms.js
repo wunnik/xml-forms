@@ -286,11 +286,21 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                     },
                      invalidHandler: function(event, validator) {
                         var errors = validator.numberOfInvalids();
+                        $("a[href^='#tab']").parent().removeClass('alertTab');
+                        
                         if (errors) {
                             var message = errors === 1 ? '1 field has errors. It has been highlighted': errors + ' fields have errors. They have been highlighted';                            
                             var errorHTML='<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Error!</strong> '+message+'</div>';
                             $(xmlforms.currentForm.dialog).find("div.modal-body div.alert.alert-error").remove();
                             $(xmlforms.currentForm.dialog).find("div.modal-body").prepend(errorHTML);
+                            
+                            for (i = 0; i < validator.invalidElements().length; i++) 
+                            {
+                                var elementWithError = ($(xmlforms.currentForm.dialog).find(validator.invalidElements()[i]))[0];
+                                
+                                var tab = $(elementWithError).closest($('div.tab-pane')).attr('id');
+                                $("a[href='#" + tab + "']").parent().addClass('alertTab');
+                            }
                         }
                      }
                 });

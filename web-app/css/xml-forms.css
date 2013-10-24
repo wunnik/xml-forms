@@ -76,4 +76,7 @@ span.modal-explanation {color:#888; font-size:12px; font-style:italic;}
     z-index: 2000 !important;
 }
 
+li.alertTab{background-color: #f2dede; border: 1px solid #EED3D7; border-bottom-color: #DDD; -webkit-border-radius: 4px 4px 0px 0px; border-radius: 4px 4px 0px 0px;}
+li.active.alertTab{background-color: #fff; border: 0px;}
+li.active.alertTab a {color: #b94a48;}
 span.uneditable-textarea { min-width: 210px; max-width: 530px; white-space: normal; }
