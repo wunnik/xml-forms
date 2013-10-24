@@ -304,13 +304,29 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                         }
                      }
                 });
+            
+				var theFieldData;
+				$("input, select, textarea").focus( function() {
+					theFieldData = $(this).val();
+				});
+
+				$("input, select, textarea").blur( function() {
+					if(theFieldData !== $(this).val()) {
+						markAsEditTab(this);        
+					}
+				});
+
+				var markAsEditTab = function(elem) {
+					var tab = $(elem).closest($('div.tab-pane')).attr('id');
+
+					if ($(xmlforms.currentForm.dialog).find("a[href='#" + tab + "'] sup").length < 1) {
+						$(xmlforms.currentForm.dialog).find("a[href='#" + tab + "']").append("&nbsp;<sup>*</sup>");
+					}
+				};
 
                 $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
-
-                //var fieldset=$(this).find("fieldset")[0];
-	  		
-
             }
+
 		});
 		
 		var theForm=$(xmlforms.currentForm.dialog).find("form")[0];
