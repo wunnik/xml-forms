@@ -357,7 +357,7 @@ class FormTagLib {
   //Determine if current user has said feature
   def hasFeature = {attrs,body ->
 	  println "The features are: ${session.features}"
-	  if (session.features && session.features.contains(attrs.feature)) {
+	  if (session.features && session.features.contains(attrs.feature.toString())) {
 		  out << body()
 	  }
   }
