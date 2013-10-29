@@ -76,6 +76,9 @@ span.modal-explanation {color:#888; font-size:12px; font-style:italic;}
     z-index: 2000 !important;
 }
 
+div.xml-form.modal {top: 5%; min-width: 960px; min-height: 400px;}
+div.xml-form.modal div.modal-body {min-height: 400px;}
+div.xml-form.modal div.modal-body div.tab-content {min-height: 340px;}
 a.tab sup {font-size:12px;}
 li.alertTab{background-color: #f2dede; border: 1px solid #EED3D7; border-bottom-color: #DDD; -webkit-border-radius: 4px 4px 0px 0px; border-radius: 4px 4px 0px 0px;}
 li.active.alertTab{background-color: #fff; border: 0px;}

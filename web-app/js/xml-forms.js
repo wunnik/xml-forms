@@ -169,19 +169,11 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
 		window.location.reload();
 	} else {
 
-        var theWidth="800";
+        var theWidth="960";
         try {
-            theWidth=$(xmlforms.dialogHTML).css("width")!==null ? $(xmlforms.dialogHTML).css("width").replace("px","") : "800";
+          theWidth=$(xmlforms.dialogHTML).css("width") && $(xmlforms.dialogHTML).css("width")!="0px" ? $(xmlforms.dialogHTML).css("width").replace("px","") : "960";
         } catch(err) {
         }
-        
-        var theHeight= "600";
-        try {
-            theHeight=$(xmlforms.dialogHTML).css("height") ? $(xmlforms.dialogHTML).css("height").replace("px","") : "600";
-        } catch (err) {
-            
-        }
-        
         
         // If there was a previous modal, remove it from the DOM.
         if (xmlforms.currentForm.dialog) {
@@ -346,11 +338,23 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
  			$(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
 		});		
 		xmlforms.currentForm.dialog.modal('show');
+		xmlforms.resizeDialog();
 	}
 	
 };
 
+//This is performed on a formDialog show event or on window resizing
+xmlforms.resizeDialog = function () {
+	var windowHeight = $(window).height();
 
+	$(xmlforms.currentForm.dialog).find('.modal-body').css({
+		maxHeight: (windowHeight * 0.9) - 136
+	});
+	
+	$(xmlforms.currentForm.dialog).find('.modal-body .tab-content').css({
+		maxHeight: (windowHeight * 0.9) - 136 - ($(xmlforms.currentForm.dialog).find('.modal-body fieldset').height() - $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').height())
+	});
+}
 
 
 
@@ -432,5 +436,6 @@ jQuery(function(){
 
 jQuery(function() {
 	$("body").on("dialog-refresh",xmlforms.reload);
+	$(window).resize(xmlforms.resizeDialog);
 });
 
