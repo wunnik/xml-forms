@@ -1,6 +1,8 @@
 modules = {
 	'xml-forms' {
-		dependsOn 'dialog,dialog-dataTables,dialog-altselect,dialog-ckeditor,dialog-codemirror,bootstrap-css,bootstrap-tooltip,bootstrap-popover,bootstrap-modal,dialog-last'
+		// TODO temporarily removed ckeditor - needs fixing
+		//dependsOn 'dialog,dialog-dataTables,dialog-altselect,dialog-ckeditor,dialog-codemirror,bootstrap-css,bootstrap-tooltip,bootstrap-popover,bootstrap-modal,dialog-last'
+        dependsOn 'dialog,dialog-dataTables,dialog-altselect,dialog-codemirror,bootstrap-css,bootstrap-tooltip,bootstrap-popover,bootstrap-modal,dialog-last'
 		resource url:'js/xml-forms.js'
 		resource url:'css/xml-forms.css'
 		resource url:'js/jquery/jquery.validate.pack.js'

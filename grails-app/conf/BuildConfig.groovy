@@ -1,3 +1,4 @@
+grails.plugin.location.'jquery-dialog' = "../dialog"
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
@@ -10,29 +11,26 @@ grails.project.dependency.resolution = {
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     repositories {
-        grailsCentral()
-        // uncomment the below to enable remote dependency resolution
-        // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
-        //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
+
+        inherits true // Whether to inherit repository definitions from plugins 
+ 
+        grailsPlugins() 
+        grailsHome() 
+        mavenLocal() 
+        grailsCentral() 
+        mavenCentral() 
+
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
-        // runtime 'mysql:mysql-connector-java:5.1.18'
     }
 
     plugins {
-		runtime ':jquery-dialog:2.0.2'
+		// for 2.3.x
+        //build ":tomcat:7.0.42"
 		
-        build(":tomcat:$grailsVersion",
-              ":release:2.0.3",
-              ":rest-client-builder:1.0.2") {
-            export = false
-        }
+		// for 2.2.4
+        build ":tomcat:$grailsVersion"
+		
     }
 }
