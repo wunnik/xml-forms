@@ -133,17 +133,16 @@ class FormService implements  ApplicationContextAware {
 	}
 	
 	// Fetch the namespace map from the XML text because XmlSlurper doesn't want to share that 
-	def namespaceMap(xmlText) {
-		
-		def namespaces=[:]
-		xmlText.findAll("xmlns:[^=]+=\\s*\"[^\"]+\"") { namespace ->			
-			String prefix=namespace.split("=")[0].split(":")[1].trim()
-			String uri=namespace.split("=")[1].replace("\"","").trim()
-			namespaces.put (prefix,uri)
-		}
-		return namespaces
-	}
-    
+    def namespaceMap(xmlText) {
+        def namespaces=[:]
+        xmlText.findAll("xmlns:[^=]+=\\s*[\"\'][^\"\']+[\"\']") { namespace ->
+            String prefix=namespace.split("=")[0].split(":")[1].trim()
+            String uri=namespace.split("=")[1].replace("\"","").replace("\'","").trim()
+            namespaces.put (prefix,uri)
+        }
+        return namespaces
+    }
+   
 	// Provide a Slurped instance of provided XML text
 	def slurp(xmlText) {
 		
