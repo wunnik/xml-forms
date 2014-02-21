@@ -20,6 +20,7 @@
 package org.open_t.forms
 import java.text.*;
 import org.apache.commons.lang.WordUtils
+import org.apache.commons.lang.StringEscapeUtils
 
 /**
  * XML forms tag library
@@ -512,5 +513,13 @@ class FormTagLib {
         out << html
         out << body()
         out << """</div></div>"""
+    }
+
+    /**
+     * form:unescape
+     * HTML-unescapes the body of the tag
+     */
+    def unescape = { attrs, body ->
+        out << StringEscapeUtils.unescapeHtml(body().toString())
     }
 }
