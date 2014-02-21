@@ -61,7 +61,7 @@ class FormService implements  ApplicationContextAware {
 
     // Provide access to the session
     private HttpSession getSession() {
-    		return RequestContextHolder.currentRequestAttributes().getSession()
+        return RequestContextHolder.currentRequestAttributes().getSession()
     }
 
     // Process the update and execute request parameters.
@@ -106,7 +106,7 @@ class FormService implements  ApplicationContextAware {
 						binding.document=session[documentName]
 					    def res=new GroovyShell(binding).evaluate(gpath)
 
-						break;
+                        break;
 				}
 			}
     	}
@@ -248,8 +248,6 @@ class FormService implements  ApplicationContextAware {
 		def gspFile=new File(filename)
 		dialogService.check(gspFile.exists(),"formService.runTemplate.filenotfound",[filename])
 		try {
-
-
 			groovyPagesTemplateEngine.setApplicationContext(applicationContext)
 			groovyPagesTemplateEngine.setServletContext(servletContext)
 			groovyPagesTemplateEngine.setClassLoader(applicationContext.getClassLoader())
