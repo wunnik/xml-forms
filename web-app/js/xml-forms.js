@@ -229,6 +229,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         //$(xmlforms.currentForm.dialog[0]).css("top","50px");
 
 		var submitCallback=function(frm) {
+			$(".dialog-events").trigger("dialog-submit",{});
             xmlforms.currentForm.submitted=true;
 			xmlforms.currentForm.form = $(frm);
 			var $target = xmlforms.currentForm.form.attr('data-target');
