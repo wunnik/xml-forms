@@ -441,6 +441,7 @@ jQuery(function(){
 	$(document).on ("click" , '.action-delete',function(e) {
     	var parentid=$(this).attr("parentid");
 		var formData=$("#form").serialize();
+        $(this).tooltip('hide');            
 
 		$.ajax({
  			url: this.href,
