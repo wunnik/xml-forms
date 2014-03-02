@@ -288,7 +288,8 @@ class FormService implements  ApplicationContextAware {
 		def documentInstanceText = runTemplate(xmlPath,model)
 		session[documentName]=slurp(documentInstanceText)
 		session['namespaces']=namespaceMap(documentInstanceText)
-		String html = runTemplate(gspPath,[document:session[documentName]])
+        model.putAt('document', session[documentName])
+        String html = runTemplate(gspPath,model)
 		return html
 	}
 
