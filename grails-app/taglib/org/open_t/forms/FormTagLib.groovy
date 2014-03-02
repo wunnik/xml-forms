@@ -469,33 +469,7 @@ class FormTagLib {
         out << """<input type="submit" id="submit" value="${body()}" name="submit" class="button ui-button ui-widget ui-state-default ui-corner-all" role="button" aria-disabled="false" />"""
     }
 
-    /**
-     * form:solrSelect
-     * Select a value from a Solr search result
-     * Attributes:
-     * query
-     * max
-     * keyField
-     * valueField
-     */
-    def solrSelect = { attrs,body ->
-        def query=attrs.query?:"*:*"
-        def max=attrs.max?:100
-        def mockListConfig=[core:'Document']
-
-        def keyField=attrs.keyField?:"documentDescription"
-        def valueField=attrs.valueField?:"documentDescription"
-
-        def rsp=solrService.search(attrs.authenticationService,mockListConfig,query,[max:max]).collectEntries { item ->
-            def key =  item."${keyField}"
-            def value =  item."${valueField}"
-            [key,value]
-        }
-        attrs.options=rsp
-        out <<form.select(attrs,body)
-    }
-
-    /**
+     /**
      * form:line
      * Create a bootstrap form line
      * Attributes
