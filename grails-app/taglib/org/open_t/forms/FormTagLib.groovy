@@ -287,7 +287,19 @@ class FormTagLib {
      * helpBody
      */
 	def select = { attrs, body ->
-        	def title = attrs.title ? """title="${attrs.title}" """ : ""
+
+        // Copy all extra attributes, skip the ones that are only meaningful for select or are handled manually
+        def newAttrs=attrs.clone()
+        def attribs=""
+        def skipAttrs=['class','type','value','name','id']
+        attrs.each { attrKey, attrValue ->
+            if (!skipAttrs.contains(attrKey))
+            {
+                attribs+=""" ${attrKey}="${attrValue}" """
+             }
+        }
+
+    	def title = attrs.title ? """title="${attrs.title}" """ : ""
 
 		def options
 		attrs.options.each { def item ->
@@ -297,7 +309,7 @@ class FormTagLib {
 			options = """${options ? options : ""}<option value="${key}"${key == attrValue ? ' selected' : ''}>${value}</option>"""
 		}
 
-		out << """<select class="${attrs.class}" name="update-${attrs.gpath}" id="update-${attrs.gpath}" ${title}>${options}</select>"""
+		out << """<select ${expandAttribs(newAttrs)} class="${attrs.class}" name="update-${attrs.gpath}" id="update-${attrs.gpath}" ${title}>${options}</select>"""
 
 		if (attrs.helpTitle || attrs.helpBody) {
 		  out << """&nbsp;<a class="help-icon help action" title="${attrs.helpTitle}" data-content="${attrs.helpBody}"  href="#">&nbsp;</a>"""
