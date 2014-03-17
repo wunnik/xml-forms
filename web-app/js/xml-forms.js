@@ -21,7 +21,7 @@
 
 
 if (!window.xmlforms) {
-	window.xmlforms={
+    window.xmlforms={
         currentForm : {
             submitted:false,
             form:null,
@@ -38,10 +38,10 @@ if (!window.xmlforms) {
  * @returns True if valid
  */
 xmlforms.regexpValidator = function (value,element,expression) {
-	var theRegExp=new RegExp(expression);
+    var theRegExp=new RegExp(expression);
 
-	//true if ok, false if nok
-	return this.optional(element) || theRegExp.exec(value);
+    //true if ok, false if nok
+    return this.optional(element) || theRegExp.exec(value);
 };
 
 /**
@@ -52,9 +52,9 @@ xmlforms.regexpValidator = function (value,element,expression) {
  * @returns True if valid
  */
 xmlforms.minExclValidator = function (value,element,expression) {
-	var theRegExp=new RegExp(expression);
-	//true if ok, false if nok
-	return this.optional(element) || value > param;
+    var theRegExp=new RegExp(expression);
+    //true if ok, false if nok
+    return this.optional(element) || value > param;
 };
 
 /**
@@ -65,9 +65,9 @@ xmlforms.minExclValidator = function (value,element,expression) {
  * @returns True if valid
  */
 xmlforms.maxExclValidator = function (value,element,expression) {
-	var theRegExp=new RegExp(expression);
-	//true if ok, false if nok
-	return this.optional(element) || value < param;
+    var theRegExp=new RegExp(expression);
+    //true if ok, false if nok
+    return this.optional(element) || value < param;
 };
 
 /**
@@ -78,60 +78,60 @@ xmlforms.maxExclValidator = function (value,element,expression) {
  * @returns
  */
 xmlforms.evaluateDependencies = function(element) {
-	val=element.value;
-	name=element.name;
-	$("*[depends-on='"+name+"']").each( function () {
-		dependencyType=$(this).attr("dependency-type");
-		dependencyParameter=$(this).attr("dependency-parameter");
+    val=element.value;
+    name=element.name;
+    $("*[depends-on='"+name+"']").each( function () {
+        dependencyType=$(this).attr("dependency-type");
+        dependencyParameter=$(this).attr("dependency-parameter");
 
-		var show=false;
+        var show=false;
 
-		switch (dependencyType) {
-		case "nonempty":
-			show = val !== null && val.length>0;
-			break;
-		case "empty":
-			show = val === null || val.length===0;
-			break;
-		case "true":
-			show = val !== null && val.length>0;
-			break;
-		case "false":
-			show = val === null || val.length===0 || val==="0" || val ==="false";
-			break;
-		case "gt":
-			show = val !== null && val>dependencyParameter;
-		break;
-		case "lt":
-			show = val !== null && val<dependencyParameter;
-			break;
-		case "eq":
-			show = val !== null && val===dependencyParameter;
-			break;
-		case "ne":
-			show = val !== null || val!==dependencyParameter;
-			break;
-		default:
-			show = (val !== null) && (val.length>0);
-			break;
-		}
+        switch (dependencyType) {
+        case "nonempty":
+            show = val !== null && val.length>0;
+            break;
+        case "empty":
+            show = val === null || val.length===0;
+            break;
+        case "true":
+            show = val !== null && val.length>0;
+            break;
+        case "false":
+            show = val === null || val.length===0 || val==="0" || val ==="false";
+            break;
+        case "gt":
+            show = val !== null && val>dependencyParameter;
+        break;
+        case "lt":
+            show = val !== null && val<dependencyParameter;
+            break;
+        case "eq":
+            show = val !== null && val===dependencyParameter;
+            break;
+        case "ne":
+            show = val !== null || val!==dependencyParameter;
+            break;
+        default:
+            show = (val !== null) && (val.length>0);
+            break;
+        }
 
 
-		if (!show) {
-			$(this).hide("fast");
-			if ($(this).attr("name")) {
-				$(this).attr("name",$(this).attr("name").replace("update-","hidden-"));
-			}
+        if (!show) {
+            $(this).hide("fast");
+            if ($(this).attr("name")) {
+                $(this).attr("name",$(this).attr("name").replace("update-","hidden-"));
+            }
 
-		} else {
-			$(this).show("fast");
-			if ($(this).attr("name")) {
-				$(this).attr("name",$(this).attr("name").replace("hidden-","update-"));
-			}
-		}
+        } else {
+            $(this).show("fast");
+            if ($(this).attr("name")) {
+                $(this).attr("name",$(this).attr("name").replace("hidden-","update-"));
+            }
+        }
 
-	}
-	);
+    }
+    );
 };
 
 /**
@@ -143,9 +143,9 @@ xmlforms.reload = function reload() {
     $("span.help").tooltip({container:'body',placement:'right'});
     $("a.help").tooltip({container:'body',placement:'right'});
     $("li.menu-item a").tooltip({container:'body',placement:'right'});
-	$(".dependency-source").each(function() {
-  		xmlforms.evaluateDependencies(this);
-	});
+    $(".dependency-source").each(function() {
+          xmlforms.evaluateDependencies(this);
+    });
 };
 
 /**
@@ -163,44 +163,55 @@ xmlforms.reload = function reload() {
  * @returns {Boolean}
  */
 xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
-	var urlId=id+window.dialog.obj2ParamStr(urlParams);
+    var urlId=id+window.dialog.obj2ParamStr(urlParams);
 
-	var dialogName = (options !== null && options["dialogname"] !== null) ? options["dialogname"] : "dialog";
-	var submitName = (options !== null && options["submitname"] !== null) ? options["submitname"] : "submit"+dialogName;
+    var dialogName = (options !== null && options["dialogname"] !== null) ? options["dialogname"] : "dialog";
+    var submitName = (options !== null && options["submitname"] !== null) ? options["submitname"] : "submit"+dialogName;
 
-	var refreshTableKey = (options !== null && options["refresh"] !== null) ? options["refresh"] : "NO_REFRESH";
+    var refreshTableKey = (options !== null && options["refresh"] !== null) ? options["refresh"] : "NO_REFRESH";
 
-	// if true, form submit will be used instead of AJAX
-	var submitForm = (options !== null && options["submitform"] !== null) ? options["submitform"] : false;
+    // if true, form submit will be used instead of AJAX
+    var submitForm = (options !== null && options["submitform"] !== null) ? options["submitform"] : false;
 
-	// if true, form will not be submitted at all
-	var noSubmit = (options !== null && options["nosubmit"] !== null) ? options["nosubmit"] : false;
+    // if true, form will not be submitted at all
+    var noSubmit = (options !== null && options["nosubmit"] !== null) ? options["nosubmit"] : false;
 
-	var domainClass = (options !== null && options["domainclass"] !== null) ? options["domainclass"] : controllerName.capitalize();
+    var domainClass = (options !== null && options["domainclass"] !== null) ? options["domainclass"] : controllerName.capitalize();
 
-	theUrl=window.dialog.baseUrl+'/'+controllerName+'/'+dialogName+'/'+urlId;
+    theUrl=window.dialog.baseUrl+'/'+controllerName+'/'+dialogName+'/'+urlId;
 
-	xmlforms.dialogHTML = $.ajax({
-		url: theUrl,
-		async: false,
-		cache: false
-	}).error(function(event, jqXHR, ajaxSettings, thrownError) {
+    var errorMessage=null;
+    xmlforms.dialogHTML = $.ajax({
+        url: theUrl,
+        async: false,
+        cache: false
+    }).error(function(event, jqXHR, ajaxSettings, thrownError) {
+        // If the error is authentication, reload the window to show the login dialog.
         if (event.status>=400 && event.status<500) {
             window.location.reload();
+        } else {
+            // If it is not authentication, something actually went wrong.
+            // Store the errormessage so we can show it and bail out lateron
+            errorMessage=event.getResponseHeader('X-Dialog-Error-Message');
         }
-	}).responseText;
+    }).responseText;
 
+    // If an error occurred, show it and bail out.
+    if (errorMessage) {
+        $(".dialog-events").trigger("dialog-message",{message:errorMessage,alertType:'error'});
+        return
+    }
 
-	var formelements=$(xmlforms.dialogHTML).find('form.xml-form');
+    var formelements=$(xmlforms.dialogHTML).find('form.xml-form');
 
     var innerFormText=$(xmlforms.dialogHTML).find('div.body').html();
     if (innerFormText) {
         xmlforms.dialogHTML=innerFormText;
     }
 
-	if (formelements.length===0) {
-		window.location.reload();
-	} else {
+    if (formelements.length===0) {
+        window.location.reload();
+    } else {
         var theWidth="960";
         try {
           theWidth=$(xmlforms.dialogHTML).css("width") && $(xmlforms.dialogHTML).css("width")!="0px" ? $(xmlforms.dialogHTML).css("width").replace("px","") : "960";
@@ -220,70 +231,70 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         $(xmlforms.currentForm.dialog).modal({show:false,backdrop:'static'});
 
 
-		xmlforms.currentForm.dialog.draggable({
-			handle: ".modal-header"
-		});
-		//theDialog.resizable();
+        xmlforms.currentForm.dialog.draggable({
+            handle: ".modal-header"
+        });
+        //theDialog.resizable();
 
-		$(xmlforms.currentForm.dialog[0]).css("margin-left","-"+theWidth/2+"px");
+        $(xmlforms.currentForm.dialog[0]).css("margin-left","-"+theWidth/2+"px");
         //$(xmlforms.currentForm.dialog[0]).css("top","50px");
 
-		var submitCallback=function(frm) {
-			$(".dialog-events").trigger("dialog-submit",{});
+        var submitCallback=function(frm) {
+            $(".dialog-events").trigger("dialog-submit",{});
             xmlforms.currentForm.submitted=true;
-			xmlforms.currentForm.form = $(frm);
-			var $target = xmlforms.currentForm.form.attr('data-target');
+            xmlforms.currentForm.form = $(frm);
+            var $target = xmlforms.currentForm.form.attr('data-target');
 
-			var formdata=xmlforms.currentForm.form.serialize();
+            var formdata=xmlforms.currentForm.form.serialize();
 
-			$.ajax({
-				type: xmlforms.currentForm.form.attr('method'),
-				url: xmlforms.currentForm.form.attr('action'),
-				data: formdata,
-				dataType: "json",
-				success: function(data, status) {
-					var jsonResponse=data.result;
-					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
-				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'success'});
+            $.ajax({
+                type: xmlforms.currentForm.form.attr('method'),
+                url: xmlforms.currentForm.form.attr('action'),
+                data: formdata,
+                dataType: "json",
+                success: function(data, status) {
+                    var jsonResponse=data.result;
+                    $(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
+                     $(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'success'});
 
-				 	if(jsonResponse.success){
-				 		xmlforms.currentForm.dialog.modal("hide");
-				 		if (jsonResponse.nextDialog) {
-				 			xmlforms.formDialog(jsonResponse.nextDialog.id,jsonResponse.nextDialog.controllerName,jsonResponse.nextDialog.options,jsonResponse.nextDialog.urlParams);
-				 		}
-				 	} else  {
-				 		for (key in jsonResponse.errorFields) {
-				 			var errorField=jsonResponse.errorFields[key];
-				 			$("#"+errorField).parent().addClass("errors");
-				 		}
+                     if(jsonResponse.success){
+                         xmlforms.currentForm.dialog.modal("hide");
+                         if (jsonResponse.nextDialog) {
+                             xmlforms.formDialog(jsonResponse.nextDialog.id,jsonResponse.nextDialog.controllerName,jsonResponse.nextDialog.options,jsonResponse.nextDialog.urlParams);
+                         }
+                     } else  {
+                         for (key in jsonResponse.errorFields) {
+                             var errorField=jsonResponse.errorFields[key];
+                             $("#"+errorField).parent().addClass("errors");
+                         }
                         var msg='<div id="alertmessage" class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><div>'+jsonResponse.message+'</div></div>';
-				 		xmlforms.currentForm.dialog.find("div.errors").html(msg);
-				 		xmlforms.currentForm.dialog.find("div.errors").show();
+                         xmlforms.currentForm.dialog.find("div.errors").html(msg);
+                         xmlforms.currentForm.dialog.find("div.errors").show();
 
-			 		}
-				 	xmlforms.currentForm.dialog.modal("hide");
-				},
+                     }
+                     xmlforms.currentForm.dialog.modal("hide");
+                },
                 error: function(data, status) {
                     var responseText=eval('('+data.responseText+')');
                     var jsonResponse=responseText.result;
-					$(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
-				 	$(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'error'});
-				 		/*for (key in jsonResponse.errorFields) {
-				 			var errorField=jsonResponse.errorFields[key];
-				 			$("#"+errorField).parent().addClass("errors");
-				 		}
+                    $(".dialog-events").trigger("dialog-refresh",{dc:domainClass,id:id,jsonResponse:jsonResponse});
+                     $(".dialog-events").trigger("dialog-message",{message:jsonResponse.message,alertType:'error'});
+                         /*for (key in jsonResponse.errorFields) {
+                             var errorField=jsonResponse.errorFields[key];
+                             $("#"+errorField).parent().addClass("errors");
+                         }
                     */
                         var msg='<div id="alertmessage" class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><div>'+jsonResponse.message+'</div></div>';
-				 		xmlforms.currentForm.dialog.find("div.errors").html(msg);
-				 		xmlforms.currentForm.dialog.find("div.errors").show();
+                         xmlforms.currentForm.dialog.find("div.errors").html(msg);
+                         xmlforms.currentForm.dialog.find("div.errors").show();
 
                 }
 
-			});
-			//event.preventDefault();
-		};
+            });
+            //event.preventDefault();
+        };
 
-		xmlforms.currentForm.dialog.on('show', function (event) {
+        xmlforms.currentForm.dialog.on('show', function (event) {
             if (!xmlforms.dialogOpen) {
                 xmlforms.dialogOpen=true;
 
@@ -329,63 +340,63 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                      }
                 });
 
-				var theFieldData;
-				$("input, select, textarea").focus( function() {
-					theFieldData = $(this).val();
-				});
+                var theFieldData;
+                $("input, select, textarea").focus( function() {
+                    theFieldData = $(this).val();
+                });
 
-				$("input, select, textarea").blur( function() {
-					if(theFieldData !== $(this).val()) {
-						markAsEditTab(this);
-					}
-				});
+                $("input, select, textarea").blur( function() {
+                    if(theFieldData !== $(this).val()) {
+                        markAsEditTab(this);
+                    }
+                });
 
-				var markAsEditTab = function(elem) {
-					var tab = $(elem).closest($('div.tab-pane')).attr('id');
+                var markAsEditTab = function(elem) {
+                    var tab = $(elem).closest($('div.tab-pane')).attr('id');
 
-					if ($(xmlforms.currentForm.dialog).find("a[href='#" + tab + "'] sup").length < 1) {
-						$(xmlforms.currentForm.dialog).find("a[href='#" + tab + "']").append("&nbsp;<sup>*</sup>");
-					}
-				};
+                    if ($(xmlforms.currentForm.dialog).find("a[href='#" + tab + "'] sup").length < 1) {
+                        $(xmlforms.currentForm.dialog).find("a[href='#" + tab + "']").append("&nbsp;<sup>*</sup>");
+                    }
+                };
 
                 $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
             }
 
-		});
+        });
 
-		var theForm=$(xmlforms.currentForm.dialog).find("form")[0];
+        var theForm=$(xmlforms.currentForm.dialog).find("form")[0];
 
-		$(theForm).on('submit', function(event) {
-			//submitCallback(theForm);
-			xmlforms.currentForm.form = $(this);
-			var $target = xmlforms.currentForm.form.attr('data-target');
+        $(theForm).on('submit', function(event) {
+            //submitCallback(theForm);
+            xmlforms.currentForm.form = $(this);
+            var $target = xmlforms.currentForm.form.attr('data-target');
 
-			var formdata=xmlforms.currentForm.form.serialize();
+            var formdata=xmlforms.currentForm.form.serialize();
 
-			//alert('test');
-			event.preventDefault();
-		});
+            //alert('test');
+            event.preventDefault();
+        });
 
-		$(xmlforms.currentForm.dialog).on('hide',function(event) {
- 			$(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
-		});
-		xmlforms.currentForm.dialog.modal('show');
-		xmlforms.resizeDialog();
-	}
+        $(xmlforms.currentForm.dialog).on('hide',function(event) {
+             $(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
+        });
+        xmlforms.currentForm.dialog.modal('show');
+        xmlforms.resizeDialog();
+    }
 
 };
 
 //This is performed on a formDialog show event or on window resizing
 xmlforms.resizeDialog = function () {
-	var windowHeight = $(window).height();
+    var windowHeight = $(window).height();
 
-	$(xmlforms.currentForm.dialog).find('.modal-body').css({
-		maxHeight: (windowHeight * 0.9) - 136
-	});
+    $(xmlforms.currentForm.dialog).find('.modal-body').css({
+        maxHeight: (windowHeight * 0.9) - 136
+    });
 
-	$(xmlforms.currentForm.dialog).find('.modal-body .tab-content').css({
-		maxHeight: (windowHeight * 0.9) - 136 - ($(xmlforms.currentForm.dialog).find('.modal-body fieldset').height() - $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').height())
-	});
+    $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').css({
+        maxHeight: (windowHeight * 0.9) - 136 - ($(xmlforms.currentForm.dialog).find('.modal-body fieldset').height() - $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').height())
+    });
 }
 
 
@@ -395,66 +406,66 @@ xmlforms.resizeDialog = function () {
  */
 
 jQuery(function(){
-  	xmlforms.reload();
+      xmlforms.reload();
 
-  	// This copies the checkbox value into the corresponding (hidden) update field so we have a value in the post even if the checkbox value=false
-  	$(document).on ("click" , 'input[type="checkbox"]',function(e) {
-  		var updateName=this.name.replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
-  		$('input[name="'+updateName+'"]').val($(this).attr("checked")==='checked');
-  	});
+      // This copies the checkbox value into the corresponding (hidden) update field so we have a value in the post even if the checkbox value=false
+      $(document).on ("click" , 'input[type="checkbox"]',function(e) {
+          var updateName=this.name.replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+          $('input[name="'+updateName+'"]').val($(this).attr("checked")==='checked');
+      });
 
-	// add method to validate plugin
-	$.validator.addMethod("regexp",xmlforms.regexpValidator,"Value does not match regexp");
-	$.validator.addMethod("minexcl",xmlforms.minExclValidator,"Value too small");
-	$.validator.addMethod("maxexcl",xmlforms.maxExclValidator,"Value too large");
+    // add method to validate plugin
+    $.validator.addMethod("regexp",xmlforms.regexpValidator,"Value does not match regexp");
+    $.validator.addMethod("minexcl",xmlforms.minExclValidator,"Value too small");
+    $.validator.addMethod("maxexcl",xmlforms.maxExclValidator,"Value too large");
 
-	$(document).on ("blur" , '.dependency-source',function(e) {
-			xmlforms.evaluateDependencies(e.target);
-		}
-	);
+    $(document).on ("blur" , '.dependency-source',function(e) {
+            xmlforms.evaluateDependencies(e.target);
+        }
+    );
 
-	// Perform any jQuery initialization that needs to be redone after a form reload
-	//onFormReload()
+    // Perform any jQuery initialization that needs to be redone after a form reload
+    //onFormReload()
 
-	// Add a node to a form
-	$(document).on ("click" , '.action-insert',function(e) {
-		var parentid=$(this).attr("parentid");
-		var formData=$("#form").serialize();
+    // Add a node to a form
+    $(document).on ("click" , '.action-insert',function(e) {
+        var parentid=$(this).attr("parentid");
+        var formData=$("#form").serialize();
 
-		 $.ajax({
- 			url: this.href,
- 			async: true,
- 			data: formData,
- 			type:'POST',
- 			success: function(data) {
- 				var newHTML = $(data).find("#"+parentid);
- 				$("#"+parentid).html(newHTML);
- 				$(".dialog-events").trigger("dialog-refresh",{});
- 			}
-		 });
+         $.ajax({
+             url: this.href,
+             async: true,
+             data: formData,
+             type:'POST',
+             success: function(data) {
+                 var newHTML = $(data).find("#"+parentid);
+                 $("#"+parentid).html(newHTML);
+                 $(".dialog-events").trigger("dialog-refresh",{});
+             }
+         });
 
-		return false;
-	});
+        return false;
+    });
 
 
-	// Delete a node from a form
-	$(document).on ("click" , '.action-delete',function(e) {
-    	var parentid=$(this).attr("parentid");
-		var formData=$("#form").serialize();
-        $(this).tooltip('hide');            
+    // Delete a node from a form
+    $(document).on ("click" , '.action-delete',function(e) {
+        var parentid=$(this).attr("parentid");
+        var formData=$("#form").serialize();
+        $(this).tooltip('hide');
 
-		$.ajax({
- 			url: this.href,
- 			async: true,
- 			data: formData,
- 			type:'POST',
- 			success: function(data) {
- 				var newHTML = $(data).find("#"+parentid);
- 				$("#"+parentid).html(newHTML);
- 				$(".dialog-events").trigger("dialog-refresh",{});
- 			}
-		 });
-		return false;
+        $.ajax({
+             url: this.href,
+             async: true,
+             data: formData,
+             type:'POST',
+             success: function(data) {
+                 var newHTML = $(data).find("#"+parentid);
+                 $("#"+parentid).html(newHTML);
+                 $(".dialog-events").trigger("dialog-refresh",{});
+             }
+         });
+        return false;
   });
 
   // Set the outcome of a submit button to the outcome hidden field.
@@ -468,7 +479,7 @@ jQuery(function(){
 
 
 jQuery(function() {
-	$("body").on("dialog-refresh",xmlforms.reload);
-	$(window).resize(xmlforms.resizeDialog);
+    $("body").on("dialog-refresh",xmlforms.reload);
+    $(window).resize(xmlforms.resizeDialog);
 });
 
