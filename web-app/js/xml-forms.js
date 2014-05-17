@@ -378,7 +378,11 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         });
 
         $(xmlforms.currentForm.dialog).on('hide',function(event) {
-             $(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
+            // This is needed to make sure the close event is only triggered when the whole dialog hides
+            // Without this it is also triggered by the hiding of the hiding of the buttons tooltips
+            if (event.target===event.currentTarget) {
+                $(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
+            }
         });
         xmlforms.currentForm.dialog.modal('show');
         xmlforms.resizeDialog();
