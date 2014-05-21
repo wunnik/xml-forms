@@ -163,6 +163,7 @@ xmlforms.reload = function reload() {
  * @returns {Boolean}
  */
 xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
+    xmlforms.currentForm.submitted=false;
     var urlId=id+window.dialog.obj2ParamStr(urlParams);
 
     var dialogName = (options !== null && options["dialogname"] !== null) ? options["dialogname"] : "dialog";

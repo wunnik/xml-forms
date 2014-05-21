@@ -7,7 +7,7 @@ modules = {
 	}
 
 	'xml-forms-datepicker' {
-        dependsOn 'xml-forms'
+        dependsOn 'xml-forms,dialog-maskedinput'
 		resource url:'js/jquery/jquery-ui-timepicker-addon.js'
 		resource url:'js/xml-forms.datepicker.js'
 	}
