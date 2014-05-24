@@ -405,6 +405,16 @@ xmlforms.resizeDialog = function () {
 }
 
 
+xmlforms.open =function open (e,message) {
+    if (message && message.page) {
+        // add method to validate plugin
+        $.validator.addMethod("regexp",xmlforms.regexpValidator,"Value does not match regexp");
+        $.validator.addMethod("minexcl",xmlforms.minExclValidator,"Value too small");
+        $.validator.addMethod("maxexcl",xmlforms.maxExclValidator,"Value too large");
+    }
+}
+
+
 
 /*
  * jQuery processsing which takes place after page reload
@@ -413,16 +423,13 @@ xmlforms.resizeDialog = function () {
 jQuery(function(){
       xmlforms.reload();
 
+    $("body").on("dialog-open",xmlforms.open);
+
       // This copies the checkbox value into the corresponding (hidden) update field so we have a value in the post even if the checkbox value=false
       $(document).on ("click" , 'input[type="checkbox"]',function(e) {
           var updateName=this.name.replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
           $('input[name="'+updateName+'"]').val($(this).attr("checked")==='checked');
       });
-
-    // add method to validate plugin
-    $.validator.addMethod("regexp",xmlforms.regexpValidator,"Value does not match regexp");
-    $.validator.addMethod("minexcl",xmlforms.minExclValidator,"Value too small");
-    $.validator.addMethod("maxexcl",xmlforms.maxExclValidator,"Value too large");
 
     $(document).on ("blur" , '.dependency-source',function(e) {
             xmlforms.evaluateDependencies(e.target);
