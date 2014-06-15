@@ -39,7 +39,6 @@ if (!window.xmlforms) {
  */
 xmlforms.regexpValidator = function (value,element,expression) {
     var theRegExp=new RegExp(expression);
-
     //true if ok, false if nok
     return this.optional(element) || theRegExp.exec(value);
 };
@@ -52,7 +51,6 @@ xmlforms.regexpValidator = function (value,element,expression) {
  * @returns True if valid
  */
 xmlforms.minExclValidator = function (value,element,expression) {
-    var theRegExp=new RegExp(expression);
     //true if ok, false if nok
     return this.optional(element) || value > param;
 };
@@ -65,7 +63,6 @@ xmlforms.minExclValidator = function (value,element,expression) {
  * @returns True if valid
  */
 xmlforms.maxExclValidator = function (value,element,expression) {
-    var theRegExp=new RegExp(expression);
     //true if ok, false if nok
     return this.optional(element) || value < param;
 };
@@ -129,7 +126,6 @@ xmlforms.evaluateDependencies = function(element) {
                 $(this).attr("name",$(this).attr("name").replace("hidden-","update-"));
             }
         }
-
     }
     );
 };
@@ -144,7 +140,7 @@ xmlforms.reload = function reload() {
     $("a.help").tooltip({container:'body',placement:'right'});
     $("li.menu-item a").tooltip({container:'body',placement:'right'});
     $(".dependency-source").each(function() {
-          xmlforms.evaluateDependencies(this);
+        xmlforms.evaluateDependencies(this);
     });
 };
 
@@ -200,7 +196,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
     // If an error occurred, show it and bail out.
     if (errorMessage) {
         $(".dialog-events").trigger("dialog-message",{message:errorMessage,alertType:'error'});
-        return
+        return;
     }
 
     var formelements=$(xmlforms.dialogHTML).find('form.xml-form');
@@ -304,13 +300,12 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                 $(this).keyup(function(e) {
                     if (e.keyCode === 13 && e.target.nodeName!=="TEXTAREA") {
                         $(this).parents('.ui-dialog').first().find('.ui-button').first().click();
-                    return false;
-                }
+                        return false;
+                    }
                 });
 
 
                 $(this).find(".altselect").altselect();
-
 
                 $(this).find(".help").tooltip({container:'body',placement:'right'});
                 $(this).find(".help-tooltip").tooltip({container:'body'});
@@ -402,7 +397,7 @@ xmlforms.resizeDialog = function () {
     $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').css({
         maxHeight: (windowHeight * 0.9) - 136 - ($(xmlforms.currentForm.dialog).find('.modal-body fieldset').height() - $(xmlforms.currentForm.dialog).find('.modal-body .tab-content').height())
     });
-}
+};
 
 
 xmlforms.open =function open (e,message) {
@@ -412,81 +407,80 @@ xmlforms.open =function open (e,message) {
         $.validator.addMethod("minexcl",xmlforms.minExclValidator,"Value too small");
         $.validator.addMethod("maxexcl",xmlforms.maxExclValidator,"Value too large");
     }
-}
+};
 
+xmlforms.insertNode=function(e) {
+    var parentid=$(this).attr("parentid");
+    var formData=$("#form").serialize();
 
+    $.ajax({
+        url: this.href,
+        async: true,
+        data: formData,
+        type:'POST',
+        success: function(data) {
+            var newHTML = $(data).find("#"+parentid).html();
+            var parentObj=$("#"+parentid);
+            $(parentObj).html(newHTML);
+            var parentObj=$("#"+parentid);
+            $(parentObj).trigger("dialog-open",{'this':parentObj,id:parentid});
+            $(parentObj).find(".dialog-events").trigger("dialog-refresh",{});
+        }
+    });
+    return false;
+};
+
+xmlforms.deleteNode=function(e) {
+    var parentid=$(this).attr("parentid");
+    var formData=$("#form").serialize();
+    $(this).tooltip('hide');
+
+    $.ajax({
+        url: this.href,
+        async: true,
+        data: formData,
+        type:'POST',
+        success: function(data) {
+            var newHTML = $(data).find("#"+parentid).html();
+            var parentObj=$("#"+parentid);
+            $(parentObj).html(newHTML);
+            var parentObj=$("#"+parentid);
+            $(parentObj).trigger("dialog-open",{'this':parentObj,id:parentid});
+            $(parentObj).find(".dialog-events").trigger("dialog-refresh",{});
+        }
+    });
+    return false;
+};
 
 /*
  * jQuery processsing which takes place after page reload
  */
 
 jQuery(function(){
-      xmlforms.reload();
+    xmlforms.reload();
 
     $("body").on("dialog-open",xmlforms.open);
 
-      // This copies the checkbox value into the corresponding (hidden) update field so we have a value in the post even if the checkbox value=false
-      $(document).on ("click" , 'input[type="checkbox"]',function(e) {
-          var updateName=this.name.replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
-          $('input[name="'+updateName+'"]').val($(this).attr("checked")==='checked');
-      });
-
-    $(document).on ("blur" , '.dependency-source',function(e) {
-            xmlforms.evaluateDependencies(e.target);
-        }
-    );
-
-    // Perform any jQuery initialization that needs to be redone after a form reload
-    //onFormReload()
-
-    // Add a node to a form
-    $(document).on ("click" , '.action-insert',function(e) {
-        var parentid=$(this).attr("parentid");
-        var formData=$("#form").serialize();
-
-         $.ajax({
-             url: this.href,
-             async: true,
-             data: formData,
-             type:'POST',
-             success: function(data) {
-                 var newHTML = $(data).find("#"+parentid);
-                 $("#"+parentid).html(newHTML);
-                 $(".dialog-events").trigger("dialog-refresh",{});
-             }
-         });
-
-        return false;
+    // This copies the checkbox value into the corresponding (hidden) update field so we have a value in the post even if the checkbox value=false
+    $(document).on ("click" , 'input[type="checkbox"]',function(e) {
+        var updateName=this.name.replace("entry-","update-").replace(/\./g, "\\.").replace(/\[/g, "\\[").replace(/\]/g, "\\]");
+        $('input[name="'+updateName+'"]').val($(this).attr("checked")==='checked');
     });
 
+    $(document).on ("blur" ,'.dependency-source',function(e) {
+        xmlforms.evaluateDependencies(e.target);
+    }
+    );
+    $(document).on ("click" , '.action-insert',xmlforms.insertNode);
+    $(document).on ("click" , '.action-delete',xmlforms.deleteNode);
 
-    // Delete a node from a form
-    $(document).on ("click" , '.action-delete',function(e) {
-        var parentid=$(this).attr("parentid");
-        var formData=$("#form").serialize();
-        $(this).tooltip('hide');
-
-        $.ajax({
-             url: this.href,
-             async: true,
-             data: formData,
-             type:'POST',
-             success: function(data) {
-                 var newHTML = $(data).find("#"+parentid);
-                 $("#"+parentid).html(newHTML);
-                 $(".dialog-events").trigger("dialog-refresh",{});
-             }
-         });
-        return false;
-  });
-
-  // Set the outcome of a submit button to the outcome hidden field.
-  $(document).on ("click" , '.outcome-submit',function(event) {
-    var submitButton=$(event.currentTarget);
-    var outcome=submitButton.attr("outcome");
-    var outcomeFieldId=submitButton.attr("outcome-id");
-    $("#"+outcomeFieldId).val(outcome);
-  });
+    // Set the outcome of a submit button to the outcome hidden field.
+    $(document).on ("click" , '.outcome-submit',function(event) {
+        var submitButton=$(event.currentTarget);
+        var outcome=submitButton.attr("outcome");
+        var outcomeFieldId=submitButton.attr("outcome-id");
+        $("#"+outcomeFieldId).val(outcome);
+    });
 });
 
 
