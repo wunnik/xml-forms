@@ -211,9 +211,17 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
     } else {
         var theWidth="960";
         try {
-          theWidth=$(xmlforms.dialogHTML).css("width") && $(xmlforms.dialogHTML).css("width")!="0px" ? $(xmlforms.dialogHTML).css("width").replace("px","") : "960";
+          theWidth=$(xmlforms.dialogHTML).attr("form-width") ? $(xmlforms.dialogHTML).attr("form-width").replace("px","") : "960";
         } catch(err) {
         }
+
+        var theHeight="400";
+        try {
+          theHeight=$(xmlforms.dialogHTML).attr("form-height") ? $(xmlforms.dialogHTML).attr("form-height").replace("px","") : "400";
+
+        } catch(err) {
+        }
+
 
         // If there was a previous modal, remove it from the DOM.
         if (xmlforms.currentForm.dialog) {
@@ -231,10 +239,16 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
         xmlforms.currentForm.dialog.draggable({
             handle: ".modal-header"
         });
-        //theDialog.resizable();
+
 
         $(xmlforms.currentForm.dialog[0]).css("margin-left","-"+theWidth/2+"px");
-        //$(xmlforms.currentForm.dialog[0]).css("top","50px");
+
+        $(xmlforms.currentForm.dialog[0]).find(".modal").css("min-width",theWidth+"px");
+        $(xmlforms.currentForm.dialog[0]).css("width",theWidth+"px");
+        $(xmlforms.currentForm.dialog[0]).find("div.xml-form.modal").css("min-height",theHeight+"px");
+        $(xmlforms.currentForm.dialog[0]).find(".modal-body").css("min-height",theHeight+"px");
+        var minHeight=theHeight-60;
+        $(xmlforms.currentForm.dialog[0]).find(".modal-body div.tab-content").css("height",minHeight+"px");
 
         var submitCallback=function(frm) {
             $(".dialog-events").trigger("dialog-submit",{});

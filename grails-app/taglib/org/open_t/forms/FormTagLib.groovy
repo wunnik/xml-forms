@@ -58,7 +58,10 @@ class FormTagLib {
             cssClass+=" lock"
         }
 
-		def formHead="""<div ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        def width=attrs.'form-width' ?:"";
+        def height=attrs.'form-height' ?:"";
+
+		def formHead="""<div ${style}${lock} id="${attrs.name}" class="xml-form modal hide xfade${cssClass}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" form-height="${height}" form-width="${width}">
                             <div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 								<div id="myModalLabel"><span class="modal-header">${attrs.title}</span>&nbsp;<span class="modal-explanation">${attrs.explanation}</span></div>
