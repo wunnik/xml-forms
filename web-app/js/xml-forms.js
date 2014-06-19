@@ -367,9 +367,7 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                     if ($(xmlforms.currentForm.dialog).find("a[href='#" + tab + "'] sup").length < 1) {
                         $(xmlforms.currentForm.dialog).find("a[href='#" + tab + "']").append("&nbsp;<sup>*</sup>");
                     }
-                };
-
-                $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
+                };                
             }
 
         });
@@ -394,6 +392,11 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                 $(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
             }
         });
+        $(xmlforms.currentForm.dialog).on('shown', function () {
+            $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
+        });
+
+
         xmlforms.currentForm.dialog.modal('show');
         xmlforms.resizeDialog();
     }
