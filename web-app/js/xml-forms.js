@@ -275,8 +275,9 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                          }
                      } else  {
                          for (key in jsonResponse.errorFields) {
-                             var errorField=jsonResponse.errorFields[key];
-                             $("#"+errorField).parent().addClass("errors");
+                             var errorFieldId=jsonResponse.errorFields[key];
+                             var errorField=document.getElementById(errorFieldId);
+                             $(errorField).parent().addClass("errors");
                          }
                         var msg='<div id="alertmessage" class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button><div>'+jsonResponse.message+'</div></div>';
                          xmlforms.currentForm.dialog.find("div.errors").html(msg);
@@ -427,7 +428,7 @@ xmlforms.open =function open (e,message) {
 };
 
 xmlforms.insertNode=function(e) {
-    var parentid=$(this).attr("parentid");
+    var parentid=$(this).attr("parentid").replace(/\./g,"\\.");
     var formData=$("#form").serialize();
 
     $.ajax({
@@ -435,11 +436,10 @@ xmlforms.insertNode=function(e) {
         async: true,
         data: formData,
         type:'POST',
-        success: function(data) {
-            var newHTML = $(data).find("#"+parentid).html();
+        success: function(responsedata) {
             var parentObj=$("#"+parentid);
+            var newHTML = $(responsedata).find("#"+parentid).html();
             $(parentObj).html(newHTML);
-            var parentObj=$("#"+parentid);
             $(parentObj).trigger("dialog-open",{'this':parentObj,id:parentid});
             $(parentObj).find(".dialog-events").trigger("dialog-refresh",{});
         }
@@ -448,7 +448,7 @@ xmlforms.insertNode=function(e) {
 };
 
 xmlforms.deleteNode=function(e) {
-    var parentid=$(this).attr("parentid");
+    var parentid=$(this).attr("parentid").replace(/\./g,"\\.");
     var formData=$("#form").serialize();
     $(this).tooltip('hide');
 
@@ -458,10 +458,9 @@ xmlforms.deleteNode=function(e) {
         data: formData,
         type:'POST',
         success: function(data) {
+            var parentObj=$("#"+parentid);
             var newHTML = $(data).find("#"+parentid).html();
-            var parentObj=$("#"+parentid);
             $(parentObj).html(newHTML);
-            var parentObj=$("#"+parentid);
             $(parentObj).trigger("dialog-open",{'this':parentObj,id:parentid});
             $(parentObj).find(".dialog-events").trigger("dialog-refresh",{});
         }
