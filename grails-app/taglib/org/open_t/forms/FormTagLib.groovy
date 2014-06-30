@@ -337,7 +337,10 @@ class FormTagLib {
 
 		attrs.options.each { def item ->
 			if (item.getKey() != "") {
-				radioButtons = """${radioButtons ? radioButtons : ""}<tr><td><input class="${attrs.class}" name="update-${attrs.gpath}" value="${item.getKey()}" id="update-${attrs.gpath}" ${title} type="radio" ${item.getKey() == attrs.value ? "selected" : ""}/></td><td>${item.getValue()}</td><td>${!radioButtons && (attrs.helpTitle || attrs.helpBody) ? """<a class="help-icon help action" title="${attrs.helpTitle}|${attrs.helpBody}" href="#">&nbsp;</a>""" : ""}</td></tr>"""
+				String attrValue=attrs.value ? attrs.value : ""
+				String key = item.getKey() ? item.getKey() : ""
+				def status = key == attrValue ? """checked="checked" """ : ""
+				radioButtons = """${radioButtons ? radioButtons : ""}<tr><td><input class="${attrs.class}" name="update-${attrs.gpath}" value="${item.getKey()}" id="update-${attrs.gpath}" ${title} type="radio" ${status}/></td><td>${item.getValue()}</td><td>${!radioButtons && (attrs.helpTitle || attrs.helpBody) ? """<a class="help-icon help action" title="${attrs.helpTitle}|${attrs.helpBody}" href="#">&nbsp;</a>""" : ""}</td></tr>"""
 			}
 		}
 
