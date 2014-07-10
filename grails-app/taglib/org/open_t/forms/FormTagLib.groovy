@@ -333,22 +333,20 @@ class FormTagLib {
 	def radioButtonList = { attrs, body ->
 		def title = attrs.title ? """title="${attrs.title}" """ : ""
 
-		def radioButtons
+		def radioButtons = """<div class="radioButtons" style="width: 90%; float: left;">"""
 
 		attrs.options.each { def item ->
 			if (item.getKey() != "") {
 				String attrValue=attrs.value ? attrs.value : ""
 				String key = item.getKey() ? item.getKey() : ""
 				def status = key == attrValue ? """checked="checked" """ : ""
-				radioButtons = """${radioButtons ? radioButtons : ""}<tr><td><input class="${attrs.class}" name="update-${attrs.gpath}" value="${item.getKey()}" id="update-${attrs.gpath}" ${title} type="radio" ${status}/></td><td>${item.getValue()}</td><td>${!radioButtons && (attrs.helpTitle || attrs.helpBody) ? """<a class="help-icon help action" title="${attrs.helpTitle}|${attrs.helpBody}" href="#">&nbsp;</a>""" : ""}</td></tr>"""
+				radioButtons = """${radioButtons ? radioButtons : ""}<label class="radio"><input class="${attrs.class}" name="update-${attrs.gpath}" value="${item.getKey()}" id="update-${attrs.gpath}" ${title} type="radio" ${status}/>${item.getValue()}</label>"""
 			}
 		}
 
-		if (!radioButtons) {
-			radioButtons = """<tr><td>&nbsp;<a class="help-icon help action" title="${attrs.helpTitle}" data-content="${attrs.helpBody}"  href="#">&nbsp;</a></td></tr>"""
-		}
+    	radioButtons += """</div><div class="helpIconPlaceholder" style="float: right;"><a class="help-icon help action" title="${attrs.helpTitle}" data-content="${attrs.helpBody}"  href="#">&nbsp;</a></div>"""
 
-		out << """<table>${radioButtons}</table>"""
+		out << """${radioButtons}"""
 	}
 
     /**
