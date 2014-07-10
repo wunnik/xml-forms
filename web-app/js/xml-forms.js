@@ -393,8 +393,13 @@ xmlforms.formDialog = function (id,controllerName, options ,urlParams) {
                 $(this).trigger("dialog-close",{event:event,ui:null,'this':this,currentForm:xmlforms.currentForm});
             }
         });
+        
+        var firstTimeShown = false;
         $(xmlforms.currentForm.dialog).on('shown', function () {
-            $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
+            if (!firstTimeShown) {
+                $(this).find("input[type!='hidden'],select,textarea").filter(":first").focus();
+                firstTimeShown = true;
+            }
         });
 
 
