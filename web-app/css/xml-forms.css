@@ -85,5 +85,4 @@ li.active.alertTab a {color: #b94a48;}
 .xml-form.modal .form-horizontal .controls {margin-left: 250px;}
 span.uneditable-textarea { min-width: 210px; max-width: 530px; white-space: normal; }
 
-.radioButtons{width: 90%; float: left;}
-.helpIconPlaceholder{float: right;}
+.radio-buttons{width: 90%; float: left;}

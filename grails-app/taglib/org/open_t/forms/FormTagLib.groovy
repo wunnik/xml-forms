@@ -333,7 +333,7 @@ class FormTagLib {
 	def radioButtonList = { attrs, body ->
 		def title = attrs.title ? """title="${attrs.title}" """ : ""
 
-		def radioButtons = """<div class="radioButtons" style="width: 90%; float: left;">"""
+		def radioButtons = """<div class="radio-buttons">"""
 
 		attrs.options.each { def item ->
 			if (item.getKey() != "") {
@@ -344,7 +344,7 @@ class FormTagLib {
 			}
 		}
 
-    	radioButtons += """</div><div class="helpIconPlaceholder" style="float: right;"><a class="help-icon help action" title="${attrs.helpTitle}" data-content="${attrs.helpBody}"  href="#">&nbsp;</a></div>"""
+    	radioButtons += """</div><div class="help-icon-placeholder"><a class="help-icon help action" title="${attrs.helpTitle}" data-content="${attrs.helpBody}"  href="#">&nbsp;</a></div>"""
 
 		out << """${radioButtons}"""
 	}
